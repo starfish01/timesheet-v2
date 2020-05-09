@@ -49,7 +49,7 @@ export default {
   },
   data() {
     return {
-      activeStep: 0,
+      activeStep: 1,
       customNavigation: false,
       isProfileSuccess: false,
       position: null
@@ -68,12 +68,7 @@ export default {
   }
 };
 </script>
-<style lang="scss">
-@media only screen and (max-width: 600px) {
-  body {
-    background-color: lightblue;
-  }
-}
+<style lang="scss" scopped>
 @media screen and (max-width: 768px) {
   li.step-item.is-active {
     &:after {
