@@ -1,4 +1,5 @@
 export default () => ({
   name: '',
-  weekCommencing: null
+  weekCommencing: null,
+  dayData: [],
 });

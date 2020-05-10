@@ -6,12 +6,17 @@
       <b-radio v-model="workToday" name="name" native-value="N">No</b-radio>
     </div>
 
+    <!-- -{{day}}-{{dayData}}= -->
     <template v-if="workToday === 'Y'">
       <div class="content">
         <form @submit.prevent>
           <div class="columns">
             <div class="column">
-              <b-field label="Start Time">
+              <b-field
+                label="Start Time"
+                :type="showErrors ? 'is-danger' : ''"
+                :message="showErrors ? 'This information is required' : ''"
+              >
                 <b-clockpicker
                   hour-format="12"
                   v-model="workingDayData.shift_start"
@@ -22,7 +27,11 @@
               </b-field>
             </div>
             <div class="column">
-              <b-field label="End Time">
+              <b-field
+                label="End Time"
+                :type="showErrors ? 'is-danger' : ''"
+                :message="showErrors ? 'This information is required' : ''"
+              >
                 <b-clockpicker
                   hour-format="12"
                   v-model="workingDayData.shift_end"
@@ -35,19 +44,31 @@
           </div>
           <div class="columns">
             <div class="column is-3">
-              <b-field label="20 Min Break">
+              <b-field
+                label="20 Min Break"
+                :type="showErrors ? 'is-danger' : ''"
+                :message="showErrors ? 'This information is required' : ''"
+              >
                 <b-checkbox v-model="workingDayData.break_20"></b-checkbox>
               </b-field>
             </div>
             <div class="column is-3">
-              <b-field label="30 Min Break">
+              <b-field
+                label="30 Min Break"
+                :type="showErrors ? 'is-danger' : ''"
+                :message="showErrors ? 'This information is required' : ''"
+              >
                 <b-checkbox v-model="workingDayData.break_30"></b-checkbox>
               </b-field>
             </div>
           </div>
           <div class="columns" v-for="(site, index) in workingDayData.sites" :key="index">
             <div class="column is-6">
-              <b-field label="Site">
+              <b-field
+                label="Site"
+                :type="(showErrors && index === 0) ? 'is-danger' : ''"
+                :message="(showErrors && index === 0) ? 'This information is required' : ''"
+              >
                 <b-input v-model="site.title"></b-input>
               </b-field>
             </div>
@@ -59,7 +80,7 @@
             <div class="column is-3 site buttons">
               <template v-if="(index + 1) === workingDayData.sites.length">
                 <b-button
-                  :class="index === 0 ? 'end' : ''"
+                  :class="[index === 0 ? 'end' : '', (showErrors && index === 0) ? 'error-active' : '']"
                   type
                   icon-right="plus"
                   @click="addSite()"
@@ -81,7 +102,12 @@
 
     <template v-if="workToday === 'N' && workToday !== null">
       <form @submit.prevent>
-        <b-field label="Reason" label-position="on-border" v-if="!isWeekend">
+        <b-field
+          :type="showErrors ? 'is-danger' : ''"
+          :message="showErrors ? 'This information is required' : ''"
+          label="Reason"
+          v-if="!isWeekend"
+        >
           <b-input v-model="nonWorkingDayData.reason" maxlength="200" type="textarea"></b-input>
         </b-field>
         <b-button @click="saveNonWorkDay">Save</b-button>
@@ -93,11 +119,13 @@
 <script>
 export default {
   props: {
-    isWeekend: Boolean
+    isWeekend: Boolean,
+    dayData: Object
   },
   data() {
     return {
       workToday: null,
+      showErrors: false,
       nonWorkingDayData: {
         reason: ""
       },
@@ -119,14 +147,25 @@ export default {
     saveNonWorkDay() {
       if (!this.nonWorkingDayData.reason && !this.isWeekend) {
         // throw Error
-
+        this.showErrors = true;
         return;
       }
-      alert("completed");
       // Save Data to model
       return;
     },
-    saveWorkDay() {},
+    saveWorkDay() {
+      if (
+        !this.workingDayData.shift_start ||
+        !this.workingDayData.shift_end ||
+        !this.workingDayData.sites[0].title
+      ) {
+        // throw error
+        this.showErrors = true;
+        return;
+      }
+      // Save Data to model
+      return;
+    },
     addSite() {
       this.workingDayData.sites.push({
         title: "",
@@ -149,6 +188,9 @@ export default {
   .end {
     margin-left: 0;
     margin-right: auto;
+    &.error-active {
+      margin-bottom: 1.9rem;
+    }
   }
 }
 </style>

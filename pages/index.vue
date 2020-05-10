@@ -23,6 +23,7 @@
                 v-if="canUserContinue"
                 :disabled="next.disabled"
                 @click.prevent="next.action"
+                @click="generateDayData()"
               >Next</b-button>
               <b-button v-if="!canUserContinue" disabled="true">Next</b-button>
             </template>
@@ -35,6 +36,7 @@
 
 <script>
 import { mapGetters, mapState } from "vuex";
+
 
 import UserDetails from "@/components/timesheet/UserDetails";
 import DayDetails from "@/components/timesheet/DayDetails";
@@ -49,11 +51,16 @@ export default {
   },
   data() {
     return {
-      activeStep: 1,
+      activeStep: 0,
       customNavigation: false,
       isProfileSuccess: false,
       position: null
     };
+  },
+  methods:{
+    generateDayData() {
+     
+    }
   },
   computed: {
     canUserContinue() {

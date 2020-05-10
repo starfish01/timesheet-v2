@@ -5,4 +5,7 @@ export default {
     }
     return false;
   },
+  dayData(state) {
+    return state.dayData;
+  }
 }
