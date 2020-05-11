@@ -5,8 +5,6 @@
       <b-radio v-model="workToday" name="name" native-value="Y">Yes</b-radio>
       <b-radio v-model="workToday" name="name" native-value="N">No</b-radio>
     </div>
-
-    <!-- -{{day}}-{{dayData}}= -->
     <template v-if="workToday === 'Y'">
       <div class="content">
         <form @submit.prevent>
@@ -120,6 +118,7 @@
 export default {
   props: {
     isWeekend: Boolean,
+    day: String,
     dayData: Object
   },
   data() {
@@ -150,7 +149,11 @@ export default {
         this.showErrors = true;
         return;
       }
-      // Save Data to model
+      this.$store.dispatch("userData/addDayData", {
+        data: this.nonWorkingDayData,
+        day: this.day
+      });
+      this.$emit('dataWasSaved');
       return;
     },
     saveWorkDay() {
@@ -163,7 +166,11 @@ export default {
         this.showErrors = true;
         return;
       }
-      // Save Data to model
+      this.$store.dispatch("userData/addDayData", {
+        data: this.workingDayData,
+        day: this.day
+      });
+      this.$emit('dataWasSaved');
       return;
     },
     addSite() {
@@ -175,7 +182,18 @@ export default {
     removeSite(index) {
       this.workingDayData.sites.splice(index, 1);
     }
-  }
+  },
+  // computed: {
+  //   populateData() {
+  //     if (!this.dayData) {
+  //       return;
+  //     }
+  //     if (this.dayData["reason"] in obj) {
+  //       this.workToday = "N";
+  //       this.nonWorkingDayData.reason = this.dayData.reason;
+  //     }
+  //   }
+  // }
 };
 </script>
 <style lang="scss" scoped>

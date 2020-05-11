@@ -1,11 +1,10 @@
 <template>
   <div class="column">
     <h1 class="title has-text-centered">Days Worked</h1>
-    <!-- {{dayData}} -->
     <section>
       <b-collapse
         class="card"
-        animation="slide"
+        animation="fade"
         v-for="(day, index) of dayData"
         :key="index"
         :open="isOpen == index"
@@ -23,7 +22,7 @@
         </div>
         <div class="card-content">
           <div class="content">
-            <Details :isWeekend="day.isWeekend" :dayData="day.dayData" :day="day"/>
+            <Details @dataWasSaved="moveOnToNextDay" :isWeekend="day.isWeekend" :day="day.day" :dayData="day.data" />
           </div>
         </div>
       </b-collapse>
@@ -44,6 +43,11 @@ export default {
     return {
       isOpen: 0
     };
+  },
+  methods:{
+    moveOnToNextDay() {
+      this.isOpen += 1;
+    }
   },
   computed: {
     ...mapGetters({

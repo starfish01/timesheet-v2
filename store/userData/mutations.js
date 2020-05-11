@@ -3,7 +3,6 @@ export default {
     state.name = data.name
     state.weekCommencing = data.weekCommencing
   },
-
   generateDayData(state) {
     const startDay = state.weekCommencing;
     state.dayData = [];
@@ -18,5 +17,13 @@ export default {
         isWeekend: (day === 'Saturday' || day === 'Sunday') ? true : false
       });
     }
+  },
+  addDayData(state, data) {
+    const dayTitle = data.day;
+    _.forEach(state.dayData, function (day) {
+      if (dayTitle === day.day) {
+        day.data = data.data;
+      }
+    });
   }
 }
