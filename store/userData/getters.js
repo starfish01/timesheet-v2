@@ -5,6 +5,17 @@ export default {
     }
     return false;
   },
+  canUserContinueDayDetailsStep(state) {
+    let canContinue = state.dayData.length;
+
+    _.forEach(state.dayData, function (day) {
+      if (day.data !== null) {
+        canContinue -= 1;
+      }
+    });
+
+    return canContinue
+  },
   dayData(state) {
     return state.dayData;
   }

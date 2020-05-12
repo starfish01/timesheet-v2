@@ -4,7 +4,6 @@
       <div class="column">
         <section>
           <b-steps v-model="activeStep">
-            <!-- //768 -->
             <b-step-item step="1" label="Details">
               <UserDetails />
             </b-step-item>
@@ -24,8 +23,11 @@
                 :disabled="next.disabled"
                 @click.prevent="next.action"
                 @click="generateDayData()"
-              >Next</b-button>
-              <b-button v-if="!canUserContinue" disabled="true">Next</b-button>
+              >{{ activeStep === 2 ? 'Submit' : 'Next'}}</b-button>
+              <b-button
+                v-if="!canUserContinue"
+                disabled="true"
+              >{{ activeStep === 2 ? 'Submit' : 'Next'}}</b-button>
             </template>
           </b-steps>
         </section>
@@ -36,7 +38,6 @@
 
 <script>
 import { mapGetters, mapState } from "vuex";
-
 
 import UserDetails from "@/components/timesheet/UserDetails";
 import DayDetails from "@/components/timesheet/DayDetails";
@@ -57,20 +58,27 @@ export default {
       position: null
     };
   },
-  methods:{
-    generateDayData() {
-     
-    }
+  methods: {
+    generateDayData() {}
   },
   computed: {
     canUserContinue() {
-      if (this.canUserContinueUserDetailsStep) {
-        return true;
+      if (this.activeStep === 0) {
+        if (this.canUserContinueUserDetailsStep) {
+          return true;
+        }
+        return false;
       }
-      return false;
+      if (this.activeStep === 1) {
+        if (this.canUserContinueDayDetailsStep === 0) {
+          return true;
+        }
+        return false;
+      }
     },
     ...mapGetters({
-      canUserContinueUserDetailsStep: "userData/canUserContinueUserDetailsStep"
+      canUserContinueUserDetailsStep: "userData/canUserContinueUserDetailsStep",
+      canUserContinueDayDetailsStep: "userData/canUserContinueDayDetailsStep"
     })
   }
 };

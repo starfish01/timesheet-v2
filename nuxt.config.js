@@ -38,7 +38,9 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: [
+    '~/plugins/signature'
+  ],
   /*
    ** Nuxt.js dev-modules
    */
