@@ -25,5 +25,9 @@ export default {
         day.data = data.data;
       }
     });
+  },
+  changeConfirmationDetails(state, data) {
+    state.supervisor = data.supervisor;
+    state.signature = data.signature;
   }
 }

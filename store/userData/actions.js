@@ -6,7 +6,7 @@ export default {
   addDayData(context, payload) {
     context.commit('addDayData', payload)
   },
-
-
-
+  updateConfirmationDetails(context, payload) {
+    context.commit('changeConfirmationDetails', payload)
+  },
 }

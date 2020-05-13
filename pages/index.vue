@@ -19,15 +19,16 @@
             <template slot="navigation" slot-scope="{previous, next}">
               <b-button :disabled="previous.disabled" @click.prevent="previous.action">Previous</b-button>
               <b-button
-                v-if="canUserContinue"
+                v-if="canUserContinue && activeStep !== 2"
                 :disabled="next.disabled"
                 @click.prevent="next.action"
                 @click="generateDayData()"
-              >{{ activeStep === 2 ? 'Submit' : 'Next'}}</b-button>
-              <b-button
-                v-if="!canUserContinue"
-                disabled="true"
-              >{{ activeStep === 2 ? 'Submit' : 'Next'}}</b-button>
+              >Next</b-button>
+              <b-button v-if="!canUserContinue && activeStep !== 2" disabled="true">Next</b-button>
+
+              <b-button v-if="canSubmitTimesheet">Submit</b-button>
+              <b-button disabled="true" v-if="activeStep === 2 && !canSubmitTimesheet">Submit</b-button>
+
             </template>
           </b-steps>
         </section>
@@ -52,7 +53,7 @@ export default {
   },
   data() {
     return {
-      activeStep: 0,
+      activeStep: 2,
       customNavigation: false,
       isProfileSuccess: false,
       position: null
@@ -78,7 +79,8 @@ export default {
     },
     ...mapGetters({
       canUserContinueUserDetailsStep: "userData/canUserContinueUserDetailsStep",
-      canUserContinueDayDetailsStep: "userData/canUserContinueDayDetailsStep"
+      canUserContinueDayDetailsStep: "userData/canUserContinueDayDetailsStep",
+      canSubmitTimesheet: "userData/canSubmitTimesheet"
     })
   }
 };

@@ -18,5 +18,11 @@ export default {
   },
   dayData(state) {
     return state.dayData;
+  },
+  canSubmitTimesheet(state) {
+    if (state.signature && state.supervisor) {
+      return true;
+    }
+    return false;
   }
 }

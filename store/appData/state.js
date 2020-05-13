@@ -1,7 +1,11 @@
 export default () => ({
-    supervisors:[
-        {title:'Rene'},
-        {title:'Bob'},
-    ]
-  });
-  
+  supervisors: [{
+      title: 'Rene',
+      id: 1
+    },
+    {
+      title: 'Bob',
+      id: 2
+    },
+  ]
+});
