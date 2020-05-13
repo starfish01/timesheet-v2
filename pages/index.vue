@@ -13,7 +13,7 @@
             </b-step-item>
 
             <b-step-item step="3" label="Confirmation" disabled>
-              <Confirmation />
+              <Confirmation v-if="canUserContinueDayDetailsStep === 0"/>
             </b-step-item>
 
             <template slot="navigation" slot-scope="{previous, next}">
@@ -53,7 +53,7 @@ export default {
   },
   data() {
     return {
-      activeStep: 2,
+      activeStep: 0,
       customNavigation: false,
       isProfileSuccess: false,
       position: null

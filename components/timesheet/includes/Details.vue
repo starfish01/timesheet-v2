@@ -131,6 +131,8 @@ export default {
       workingDayData: {
         shift_start: null,
         shift_end: null,
+        start: null,
+        end: null,
         break_20: false,
         break_30: false,
         sites: [
@@ -166,6 +168,10 @@ export default {
         this.showErrors = true;
         return;
       }
+      
+      this.workingDayData.start = this.$moment(this.workingDayData.shift_start).format('HH:mm');
+      this.workingDayData.end = this.$moment(this.workingDayData.shift_end).format('HH:mm');
+      
       this.$store.dispatch("userData/addDayData", {
         data: this.workingDayData,
         day: this.day

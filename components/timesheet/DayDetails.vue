@@ -65,4 +65,7 @@ export default {
 .need-info {
   color: red;
 }
+.card-header {
+  background: #f3f3f3;
+}
 </style>

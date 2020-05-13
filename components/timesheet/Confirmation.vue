@@ -1,7 +1,9 @@
 <template>
   <div class="column">
     <h1 class="title has-text-centered">Confirmation</h1>
-
+    
+    <ReviewDetails />
+    
     <b-field label="Send timesheet to">
       <b-select placeholder="Select a name" v-model="selectSuper">
         <option v-for="option in supervisors" :value="option.id" :key="option.id">{{ option.title }}</option>
@@ -26,9 +28,13 @@
 
 <script>
 import { mapGetters } from "vuex";
+import ReviewDetails from "@/components/timesheet/includes/ReviewDetails";
 
 export default {
   name: "SignaturePad",
+  components: {
+    ReviewDetails
+  },
   data() {
     return {
       signaturePad: false,
