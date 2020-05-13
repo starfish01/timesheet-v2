@@ -22,7 +22,7 @@
           <div class="media-content">
             <div class="content">
               <h6 class="title is-6">Sites</h6>
-              <p
+              <p class="site-review-data"
                 v-for="(item, index) in props.row.data.sites"
                 :key="index"
               >Site: {{item.title}} <template v-if="item.timeSpent">- Hours: {{item.timeSpent}}</template></p>
@@ -55,7 +55,7 @@ export default {
   data() {
     return {
       columns: [{ field: "day", label: "First Name" }],
-      defaultOpenedDetails: ['Monday','Tueday','Wednesday','Thursday','Friday','Saturday','Sunday'],
+      defaultOpenedDetails: [] // ['Monday','Tueday','Wednesday','Thursday','Friday','Saturday','Sunday'],
     };
   },
   methods: {
@@ -82,7 +82,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-h4.title.is-4 {
+h4.title.is-4, .title.is-6, .media-content .content .site-review-data {
   margin-bottom: 0;
 }
 .day-review-data {
