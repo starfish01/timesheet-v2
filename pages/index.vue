@@ -26,7 +26,7 @@
               >Next</b-button>
               <b-button v-if="!canUserContinue && activeStep !== 2" disabled="true">Next</b-button>
 
-              <b-button v-if="canSubmitTimesheet">Submit</b-button>
+              <b-button @click="submitData()" v-if="canSubmitTimesheet">Submit</b-button>
               <b-button disabled="true" v-if="activeStep === 2 && !canSubmitTimesheet">Submit</b-button>
 
             </template>
@@ -56,11 +56,16 @@ export default {
       activeStep: 0,
       customNavigation: false,
       isProfileSuccess: false,
-      position: null
+      position: null,
+      sendingData: false
     };
   },
   methods: {
-    generateDayData() {}
+    generateDayData() {},
+    submitData(){
+      this.sendingData = true;
+      this.$store.dispatch("userData/sendData");
+    }
   },
   computed: {
     canUserContinue() {
